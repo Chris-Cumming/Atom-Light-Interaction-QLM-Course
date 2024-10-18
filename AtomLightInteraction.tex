@@ -50,6 +50,33 @@ pdfauthor = {}
 
 \section{Preliminaries}
 
+\subsection{Numerical Solutions of coupled ODEs}
+
+Quite often models in atom-light interactions can be decomposed into solving coupled ODEs. Generally these will be solved as IVP. This means solving equations of the form:
+
+\begin{equation}
+    \frac{d \underline{u}}{dt} = \underline{f}(\underline{u}, t),
+    \label{CoupledODEs}
+\end{equation}
+
+\noindent where we wish to solve for $\underline{u}(t_0 + t)$ given $\underline{u}(t_o) = \underline{u}_0$. An example of this is solving the equation of motion for a simple pendulum. This has an equation of motion for the angular degree of freedom as:
+
+\begin{equation}
+    \frac{d^2 \theta}{dt^2} = -\sin(\theta).
+    \label{PendulumEOM}
+\end{equation}
+
+\noindent This 2nd order ODE can be decomposed into two coupled first order ODEs:
+
+\begin{equation}
+    \frac{d \theta}{dt} = \dot{\theta}; ~ \frac{d \dot{\theta}}{dt} = -\sin(\theta),
+    \label{CoupledPendulumODEs}
+\end{equation}
+
+\noindent which matches our general definition, Eq~\ref{CoupledODEs}, if $\underline{u} = (\theta, \dot{\theta})$.
+
+\subsection{Matrix Representation of QM}
+
 \section{Atoms in Zero Field}
 
 \section{Atoms in Static Field}
