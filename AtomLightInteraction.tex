@@ -9,6 +9,9 @@
 
 \usepackage{gensymb} %Initially only used for degrees symbol
 
+\usepackage{amsmath}
+\usepackage{braket}
+
 
 \usepackage[pdftex]{graphicx} % Required for including pictures
 \usepackage[pdftex,linkcolor=black,pdfborder={0 0 0}]{hyperref} % Format links for pdf
@@ -76,6 +79,91 @@ Quite often models in atom-light interactions can be decomposed into solving cou
 \noindent which matches our general definition, Eq~\ref{CoupledODEs}, if $\underline{u} = (\theta, \dot{\theta})$.
 
 \subsection{Matrix Representation of QM}
+
+Throughout this course there will be an emphasis on using numerical methods in order to determine finite dimensional quantum mechanical operators, with a particular emphasis on angular momentum operators. We shall begin by considering the basic spin $\frac{1}{2}$ system.
+
+\noindent For a quantisation axis (along the z-axis) there are two possible eigenstates of the spin projection operator (along the z-axis) for a spin $\frac{1}{2}$ system. These are "spin up", denoted $\ket{+ \frac{1}{2}}$, and "spin down", denoted $\ket{- \frac{1}{2}}$. This means that a general state vector of the system can be written in terms of these eigenstates:
+
+\begin{equation}
+    \ket{\psi} = c_+ \ket{+ \frac{1}{2}} + c_- \ket{- \frac{1}{2}},
+    \label{GeneralSpin1/2SystemStatVector}
+\end{equation}
+
+\noindent which can also equivalently be written as a column vector where the basis vectors are the eigenstates of the system in this particular hilbert space we have chosen.
+
+\noindent We now explicitly make our quantisation axis the z-axis such that $\ket{+ \frac{1}{2}}$ and $\ket{- \frac{1}{2}}$ are the eigenstates of $\hat{s}_z$ such that:
+
+\begin{equation}
+    \hat{s}_z \ket{\pm \frac{1}{2}} = \pm \frac{1}{2} \ket{\pm \frac{1}{2}}.
+    \label{Spin1/2ProjectionEigenstates}
+\end{equation}
+
+\noindent This operator has a matrix representation given by the Pauli matrix, $\hat{s}_z = \frac{1}{2}\sigma_3 \equiv \frac{1}{2}\sigma_z$:
+
+\begin{gather}
+    \hat{s}_z \doteq \frac{1}{2}
+    \begin{pmatrix}
+         1 & 0 \\ 0 & -1
+    \end{pmatrix}
+    ,
+    \label{MatrixRepresentationSz}
+\end{gather}
+
+\noindent and the remaining spin projection operators, $\hat{s}_x$ and $\hat{s}_y$ also have matrix representations given by the other Pauli matrices, $\hat{s}_x = \frac{1}{2}\sigma_1 \equiv \frac{1}{2}\sigma_x$ and $\hat{s}_y = \frac{1}{2}\sigma_2 \equiv \frac{1}{2}\sigma_y$:
+
+\begin{gather}
+    \hat{s}_x \doteq \frac{1}{2}
+    \begin{pmatrix}
+        0 & 1 \\ 1 & 0
+    \end{pmatrix}
+    , ~\hat{s}_y \doteq \frac{1}{2}
+    \begin{pmatrix}
+        0 & -i \\ i & 0
+    \end{pmatrix}
+    ,
+    \label{MatrixRepresentationSxSy}
+\end{gather}
+
+\noindent Here $\doteq$ that this is a representation of the operator, there are infinitely many other representations available given an infinite number of bases that can be chosen for the Pauli matrices and also since these operators don't have to be represented as matrices.
+
+\noindent Another useful definition we shall use often is that of raising and lowering (or creation and annihilation) operators. In our spin $\frac{1}{2}$ case these are defined, for only the spin of the system, as:
+
+\begin{equation}
+    \hat{s}_{\pm} = \hat{s}_x \pm i \hat{s}_y
+    \label{Spin1/2RaisingLoweringOperators}
+\end{equation}
+
+\noindent However, we shall now consider this in a more general spin $j$ space. This will have orthonormal projection eigenstates of $\ket{m_j}$ and operators such as $\hat{j}_z$, and so on. This means our previous results were for the case where $j = \frac{1}{2}$. In this new spin $j$ space the raising and lowering operators are defined as:
+
+\begin{equation}
+    \hat{j}_{\pm} \ket{m_j} = \sqrt{j(j + 1) - m_j (m_j \pm 1)} \ket{m_j \pm 1}
+    \label{Spin_j_RaisingLoweringOperators}
+\end{equation}
+
+\noindent As one of the exercises the code for $\hat{j}_+$ and $\hat{j}_-$ are written. For $j = \frac{1}{2}$, these are found to be:
+
+\begin{gather}
+    \hat{j}_+ \doteq
+    \begin{pmatrix}
+        0 & 1 \\ 0 & 0
+    \end{pmatrix}
+    , \hat{j}_- \doteq
+    \begin{pmatrix}
+        0 & 0 \\ 1 & 0
+    \end{pmatrix}
+    \label{RaisingLoweringOperatorsSpin1/2}
+\end{gather}
+
+\noindent Note how $\hat{j}_-$ is simply the transpose of $\hat{j}_+$ this is simply because of how these matrix representations act on the corresponding state vectors. Note also how these matrices automatically satisfy all the relations we expect from the raising and lowering operators, i.e $\hat{j}_+ \ket{m_j = \frac{1}{2}} = \hat{j}_- \ket{m_j = - \frac{1}{2}} = 0$ for a $j = \frac{1}{2}$ system.
+
+\noindent The utility of the raising and lowering operators is that is allows us to form the spin projection operators for a spin $j$ system using these raising and lowering operators:
+
+\begin{equation}
+    \hat{j_x} = \frac{1}{2}(\hat{j}_- + \hat{j}_+),~\hat{j_y} = \frac{1}{2}(\hat{j}_- - \hat{j}_+),~\hat{j_z} = \frac{1}{2}(\hat{j}_+ \hat{j}_- - \hat{j}_- \hat{j}_+)
+    \label{GeneralSpin_j_ProjectionOperators}
+\end{equation}
+
+The final part of this preliminary is that of combining hilbert spaces through the use of the tensor product.
 
 \section{Atoms in Zero Field}
 
