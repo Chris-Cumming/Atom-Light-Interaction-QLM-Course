@@ -16,6 +16,10 @@ import matplotlib.pyplot as plt
 
 print("")
 
+print("Exercise 1 Problems")
+
+print("")
+
 print("QUESTION 1")
 
 print("")
@@ -38,6 +42,7 @@ spin_vector = 1/2 * pauli_vector #Note hbar is missing so all results are in ter
 #print(spin_vector)
 
 #Consider 2 spin 1/2 system
+#Note capital S means total of the 2 spins, whereas lower case s refers to individual spins
 #Want the operators for the combined 2 spin system, i.e 4x4 matrices instead of 2x2
 #Can form 4x4 matrices using tensor product idea acting on hilbert spaces
 #S_x = s_x1 + s_x2, which has unwritten tensor products with the 2x2 identity matrix
@@ -57,10 +62,10 @@ Spin_Vector = np.array([Spin_Vector_X, Spin_Vector_Y, Spin_Vector_Z])
 Spin_Vector_Squared = Spin_Vector[0]@Spin_Vector[0] + Spin_Vector[1]@Spin_Vector[1] + Spin_Vector[2]@Spin_Vector[2] #Has units of hbar squared
 
 
-print("The 4x4 matrix representation for S^2 in the uncoupled basis is:")
+print("The 4x4 matrix representation for S^2 in the uncoupled basis, in units of hbar squared, is:")
 print(Spin_Vector_Squared)
 
-print("The 4x4 matrix representation for Sz in the uncoupled basis is:")
+print("The 4x4 matrix representation for Sz in the uncoupled basis, in units of hbar, is:")
 print(Spin_Vector_Z)
 
 print("")
@@ -74,12 +79,12 @@ print("")
 #The operator we wish to diagonalise in order to find the coupled basis eigenstates in terms 
 #of the uncoupled basis eigenstates is S^2 + Sz
 
-total_spin_matrix = Spin_Vector_Squared + Spin_Vector_Z
+total_Spin_matrix = Spin_Vector_Squared + Spin_Vector_Z
 #print(total_spin)
 
 #Now determine eigenstates of matrix
 
-w, vr = linalg.eig(total_spin_matrix)
+w, vr = linalg.eig(total_Spin_matrix)
 eigenvalues = w
 coupled_basis_eigenstates_kets = vr
 
@@ -97,13 +102,13 @@ print(coupled_basis_eigenstates_bra)
 
 #Compute eigenvalues of the eigenstates to check validity
 #Need better variable names
-total_spin_number = coupled_basis_eigenstates_bra @ Spin_Vector_Squared @ coupled_basis_eigenstates_kets
+total_Spin_number = coupled_basis_eigenstates_bra @ Spin_Vector_Squared @ coupled_basis_eigenstates_kets
 print("The total spin of each of the coupled basis eigenstates is:")
-print(np.diag(total_spin_number)) #3 states with total = 2 and the other total = 0 (close enough due to computation finite)
+print(np.diag(total_Spin_number)) #3 states with total = 2 and the other total = 0 (close enough due to computation finite)
 
-spin_projection_z_number = coupled_basis_eigenstates_bra @ Spin_Vector_Z @ coupled_basis_eigenstates_kets
+Spin_projection_z_number = coupled_basis_eigenstates_bra @ Spin_Vector_Z @ coupled_basis_eigenstates_kets
 print("The spin component along z for each of the coupled basis eigenstates is:")
-print(np.diag(total_spin_number)) #Believe this to be correct
+print(np.diag(Spin_projection_z_number)) #Believe this to be correct
 
 dim_coupled_basis_eigenstates_kets = np.size(coupled_basis_eigenstates_kets, axis = 0)
 #print(dim_coupled_basis_eigenstates_kets)
@@ -142,28 +147,93 @@ print("")
 
 
 s_Ax = linalg.kron(spin_vector[0], Identity2)
-print(s_Ax)
+#print(s_Ax)
 
 s_Ay = linalg.kron(spin_vector[1], Identity2)
-print(s_Ay)
+#print(s_Ay)
 
 s_Az = linalg.kron(spin_vector[2], Identity2)
+print("The matrix representation of the operator S_z for system A, in units of hbar, is:")
 print(s_Az)
 
 s_A_squared = s_Ax @ s_Ax + s_Ay @ s_Ay + s_Az @ s_Az
+print("The matrix representation of the operator S^2 for system A, in units of hbar squared is:")
 print(s_A_squared)
 
 
 s_Bx = linalg.kron(Identity2, spin_vector[0])
-print(s_Bx)
+#print(s_Bx)
 
 s_By = linalg.kron(Identity2, spin_vector[1])
-print(s_By)
+#print(s_By)
 
 s_Bz = linalg.kron(Identity2, spin_vector[2])
+print("The matrix representation of the operator S_z for system B, in units of hbar, is:")
 print(s_Bz)
 
+s_B_squared = s_Bx @ s_Bx + s_By @ s_By + s_Bz @ s_Bz
+print("The matrix representation of the operator S^2 for system B, in units of hbar squared, is:")
+print(s_B_squared)
 
+
+'''Specific problems from handout'''
+
+print("")
+
+print("Specific problems from handout")
+
+print("")
+
+'''Question 1'''
+
+print("")
+
+print("Question 1")
+
+print("")
+
+print("Completed in overleaf document")
+
+print("")
+
+'''Question 2'''
+
+print("Question 2")
+
+print("")
+
+#First define the J+ raising (creation) operator
+
+def J_plus(j):
+    dim = np.rint(2.0*j+1).astype(int) # round 2j+1 to integer
+    jp = np.zeros((dim,dim)) #Matrix form of J+
+    for mj in range(dim-1):
+        jp[mj,mj+1] = np.sqrt(j*(j+1)-(j-mj)*(j-mj-1))
+    return jp
+
+def J_minus(J_plus):
+    J_minus = np.transpose(J_plus)
+    return J_minus
+
+    
+input_j = 1/2
+output_j_plus = J_plus(input_j)
+print("The matrix representation for the J+ operator for j = ", input_j, "is given by:")
+print(output_j_plus)
+#The J- lowering (annihilation) operator is simply the transpose of the creation operator
+output_j_minus = J_minus(output_j_plus)
+print("The matrix representation for the J- operator for j = ", input_j, "is given by:")
+print(output_j_minus)
+
+'''Question 3'''
+
+print("")
+
+print("Question 3")
+
+print("")
+
+print("Done on paper as requested")
 
 
 
