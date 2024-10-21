@@ -11,6 +11,7 @@
 
 \usepackage{amsmath}
 \usepackage{braket}
+\usepackage{dsfont}
 
 
 \usepackage[pdftex]{graphicx} % Required for including pictures
@@ -163,7 +164,44 @@ Throughout this course there will be an emphasis on using numerical methods in o
     \label{GeneralSpin_j_ProjectionOperators}
 \end{equation}
 
-The final part of this preliminary is that of combining hilbert spaces through the use of the tensor product.
+\noindent The final part of this preliminary is that of combining hilbert spaces through the use of the tensor product. A significant number of the terms that are present in the Hamiltonian of the system arise due to interactions between different angular momenta.
+
+\noindent The state space we use to describe the coupling, i.e the combination of state vectors, between the individual state spaces is formed by performing the tensor product between the individual state spaces.
+
+\noindent We shall explore this using the example of two spin $\frac{1}{2}$, these will be labelled as spin $A$ and spin $B$. The state vector that describes this combined system can be written in terms of the combined eigenstates (in the uncoupled basis):
+
+\begin{equation}
+    \ket{\psi} = c_{++} \ket{+\frac{1}{2}, +\frac{1}{2}} + c_{+-} \ket{+\frac{1}{2}, -\frac{1}{2}} + c_{-+} \ket{-\frac{1}{2}, +\frac{1}{2}} + c_{--} \ket{-\frac{1}{2}, -\frac{1}{2}},
+\end{equation}
+
+\noindent which can also be written as a column vector where the basis is determined by the eigenstates that are the combined states of the system. Here $\ket{m_A, m_B}$ is a product state of system $A$ in state $m_A$ and system $B$ in state $m_B$. In the field of angular momentum this new space, constructed from all possible products of the basis states of the sub-spaces, is termed the uncoupled basis.
+
+\noindent The total spin projection operators in the combined system are given by:
+
+\begin{equation}
+    \hat{S}_i = \hat{s}_{Ai} + \hat{s}_{Bi} \equiv \hat{s}_{Ai} \otimes \mathds{1}_B + \mathds{1}_A \otimes \hat{s}_{Bi},
+    \label{TwoSpin1/2SystemSpinProjectionOperators}
+\end{equation}
+
+\noindent where the index $i$ labels the axis along which the spin projection operator acts, i.e $i = 1, 2, 3$ or equivalently $i = x, y, z$ and \(\mathds{1}\) is the identity matrix.
+
+\noindent Depending on the system being considered and the coupled angular momenta within it, it might be worth working in the coupled basis of $\ket{S, M_S}$ states instead of the uncoupled basis of $\ket{m_A, m_B}$. The coupled basis states are simultaneous eigenstates of $\hat{S}^2$ and $\hat{S}_z$ which are the corresponding total angular momentum operators for the combined system.
+
+\noindent The coupled basis states are formed from the uncoupled basis states and the relationship between these states are given by the Clebsch-Gordon coefficients, which can be determined from:
+
+\begin{equation}
+    \braket{{m_A, m_B}|{S, M_S}}
+    \label{ClebschGordonCoefficients}
+\end{equation}
+
+\noindent There is a very easy process to follow in order to determine these coefficients computationally:
+
+\begin{itemize}
+    \item Initially construct the $\hat{S}^2$ and $\hat{S}_z$ operators in the uncoupled basis.
+    \item Then diagonalise the operator $\hat{\Sigma}^2 = \hat{S}^2 + \hat{S}_z$, this produces the eigenstates of the operator which are clearly simultaneously eigenstates of both $\hat{S}^2$ and $\hat{S}_z$ with good eigenvalues $S$ and $M_S$. This means they are our coupled basis states $\ket{S, M_S}$.
+    \item These eigenvalues can be determined with the usual procedure.
+    \item The Clebsch-Gordon coefficients are simply the vector entries of the $\ket{S, M_S}$ states since they are formed from the eigenbasis of the uncoupled basis.
+\end{itemize}
 
 \section{Atoms in Zero Field}
 
