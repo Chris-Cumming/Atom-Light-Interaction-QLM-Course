@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 print("")
 
-print("Exercise 1 Problems")
+print("Exercise 1 Problems:")
 
 print("")
 
@@ -38,7 +38,7 @@ pauli_z = np.array([[1, 0], [0, -1]])
 
 pauli_vector = np.array([pauli_x, pauli_y, pauli_z])
 #print(pauli_vector)
-spin_vector = 1/2 * pauli_vector #Note hbar is missing so all results are in terms of hbar
+spin_vector = 1/2 * pauli_vector #Note hbar is missing, i.e hbar = 1, so all results are in terms of hbar
 #print(spin_vector)
 
 #Consider 2 spin 1/2 system
@@ -77,10 +77,10 @@ print("QUESTION 2")
 print("")
 
 #The operator we wish to diagonalise in order to find the coupled basis eigenstates in terms 
-#of the uncoupled basis eigenstates is S^2 + Sz
+#of the uncoupled basis eigenstates is S^2 + Sz, this is because we want simultaneous eigenstates
 
 total_Spin_matrix = Spin_Vector_Squared + Spin_Vector_Z
-#print(total_spin)
+#print(total_Spin_matrix)
 
 #Now determine eigenstates of matrix
 
@@ -88,42 +88,42 @@ w, vr = linalg.eig(total_Spin_matrix)
 eigenvalues = w
 coupled_basis_eigenstates_kets = vr
 
-#print("The eigenvalues of this matrix are:")
-#print(eigenvalues)
-
 #Individual coupled basis eigenstats kets is given by columns
-print("The coupled basis eigenstate kets in terms of the uncoupled basis eigenstates are:")
+print("The coupled basis eigenstate kets in terms of the uncoupled basis eigenstates are given by the columns of:")
 print(coupled_basis_eigenstates_kets)
 
 #Individual coupled basis eigenstates bras is given by columns 
 coupled_basis_eigenstates_bra = coupled_basis_eigenstates_kets.conj().T
-print("The coupled basis eigenstate bras in terms of the uncoupled basis eigenstates are:")
+print("The coupled basis eigenstate bras in terms of the uncoupled basis eigenstates are give by the rows of:")
 print(coupled_basis_eigenstates_bra)
 
+'''
+
 #Compute eigenvalues of the eigenstates to check validity
-#Need better variable names
-total_Spin_number = coupled_basis_eigenstates_bra @ Spin_Vector_Squared @ coupled_basis_eigenstates_kets
-print("The total spin of each of the coupled basis eigenstates is:")
-print(np.diag(total_Spin_number)) #3 states with total = 2 and the other total = 0 (close enough due to computation finite)
+total_Spin_system = coupled_basis_eigenstates_bra @ Spin_Vector_Squared @ coupled_basis_eigenstates_kets
+print("The total spin for each of the coupled basis eigenstates is:")
+print(np.diag(total_Spin_system)) #3 states with total = 2 and the other total = 0 (close enough due to computation finite)
 
 Spin_projection_z_number = coupled_basis_eigenstates_bra @ Spin_Vector_Z @ coupled_basis_eigenstates_kets
 print("The spin component along z for each of the coupled basis eigenstates is:")
 print(np.diag(Spin_projection_z_number)) #Believe this to be correct
 
+'''
+
 dim_coupled_basis_eigenstates_kets = np.size(coupled_basis_eigenstates_kets, axis = 0)
 #print(dim_coupled_basis_eigenstates_kets)
 
 for i in range(dim_coupled_basis_eigenstates_kets):
-    print("The ket of eigenstate", i + 1, "is:")
+    print("The ket of eigenstate", i + 1, "is, as a column vector:")
     print(coupled_basis_eigenstates_kets[:, i])
-    print("The bra of eigenstate", i + 1, "is:")
+    print("The bra of eigenstate", i + 1, "is, as a column vector:")
     print(coupled_basis_eigenstates_kets[:, i].conj().T)
 
 
-#We can find the Clebsch Coefficients by applying the bra of the uncoupled eigenstates onto the ket of coupled eigenstates
-#First identify each of the original unnormalised uncoupled basis eigenstates
+#In theory, we can find the Clebsch Coefficients by applying the bra of the uncoupled eigenstates onto the ket of coupled eigenstates
+#First identify each of the original un-normalised uncoupled basis eigenstates
 #Can't find normalisation factor since each individual eigenstates has a unique normalisation constant.
-#Don't have enough constraints to determine each individually.
+#Don't have enough constraints to determine each individually!
 
 '''
 uncoupled_basis_eigenstates_kets = np.identity(4)
@@ -145,6 +145,11 @@ print("QUESTION 3")
 
 print("")
 
+#The diagonals of these operators should be the observables for the individual spin system in question
+
+#Determine the 4x4 representations of the spin operators for spin A
+#Required tensor product between Hilbert space A and B
+
 
 s_Ax = linalg.kron(spin_vector[0], Identity2)
 #print(s_Ax)
@@ -159,6 +164,9 @@ print(s_Az)
 s_A_squared = s_Ax @ s_Ax + s_Ay @ s_Ay + s_Az @ s_Az
 print("The matrix representation of the operator S^2 for system A, in units of hbar squared is:")
 print(s_A_squared)
+
+#Determine the 4x4 representations of the spin operators for spin B
+#Required tensor product between Hilbert space A and B
 
 
 s_Bx = linalg.kron(Identity2, spin_vector[0])
@@ -180,7 +188,7 @@ print(s_B_squared)
 
 print("")
 
-print("Specific problems from handout")
+print("Specific problems from handout:")
 
 print("")
 
@@ -192,7 +200,7 @@ print("Question 1")
 
 print("")
 
-print("Completed in overleaf document")
+print("Notes made in Overleaf")
 
 print("")
 
@@ -205,8 +213,9 @@ print("")
 #First define the J+ raising (creation) operator
 
 def J_plus(j):
-    dim = np.rint(2.0*j+1).astype(int) # round 2j+1 to integer
-    jp = np.zeros((dim,dim)) #Matrix form of J+
+    #The operator acts on m_j states of which there are 2j + 1
+    dim = np.rint(2.0*j+1).astype(int) # round 2j+1 to integer, .astype(int) is required otherwise returned as float
+    jp = np.zeros((dim,dim)) #Matrix form of J+, currently empty
     for mj in range(dim-1):
         jp[mj,mj+1] = np.sqrt(j*(j+1)-(j-mj)*(j-mj-1))
     return jp
@@ -216,7 +225,7 @@ def J_minus(J_plus):
     return J_minus
 
     
-input_j = 1/2
+input_j = 1/2 #For spin-j system
 output_j_plus = J_plus(input_j)
 print("The matrix representation for the J+ operator for j = ", input_j, "is given by:")
 print(output_j_plus)
